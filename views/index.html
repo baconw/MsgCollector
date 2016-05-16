@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Chat Room</title>
+    <!-- Bootstrap -->
+</head>
+<body screen_capture_injected="true">
+    <h1>Welcome to Chat Room</h1>
+    <div id="menu"> 
+        <ul> 
+            <li><a href="/">主页</a></li> 
+            <li><a href="/manage">管理</a></li> 
+        </ul>
+    </div>
+    <div id="chatting">
+      <table>
+        <tr>
+            <td>Message: </td>
+            <td><input id='msg' value=''></td>
+            <td><input type="button" value="send" onclick="javascript:send();"></td>
+        </tr>
+        <tr>
+          <td>Response:</td>
+          <td><input id='response' value=''></td>
+        </tr>
+    </table>
+    </div> 
+    <script>
+      function send(){
+        msg = document.getElementById('msg').value;
+        $.getJSON("sendMsg?msg="+msg,
+                function(data) {
+                  document.getElementById('response').value = data.response;
+                });
+      }
+      </script>
+      <script src="/javascripts/jquery-latest.js"></script>
+</body>
+</html>
