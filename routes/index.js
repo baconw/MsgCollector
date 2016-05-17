@@ -37,6 +37,16 @@ function startActive(){
     });  
     req.write(data + "\n");  
     req.end();
+    
+    // 载入模块
+var Segment = require('segment');
+// 创建实例
+var segment = new Segment();
+// 使用默认的识别模块及字典，载入字典文件需要1秒，仅初始化时执行一次即可
+segment.useDefault();
+
+// 开始分词
+console.log(segment.doSegment('这是一个基于Node.js的中文分词模块。'));
 };
 
 function sendMsgToTuling(msg,fromWho,baseres){
@@ -136,6 +146,9 @@ function sendMsgToMengMeng(msg,fromWho,baseres){
                             //console.log('tuling response:'+body);
                             var jsonObj = JSON.parse(body);
                             var responseMsg = jsonObj.ret_message;
+                            if(responseMsg.substring(0,1)=='/'){
+                                responseMsg = translateMengmengEmotion(responseMsg);
+                            }
                             //console.log('response:'+responseMsg);
                             var msgDetail = {"msg":responseMsg,
                                             "fromWho":"mengmeng",
@@ -159,6 +172,15 @@ function sendMsgToMengMeng(msg,fromWho,baseres){
     req.write(data + "\n");  
     req.end();
 };
+
+function translateMengmengEmotion(input){
+    console.log('call translateMengmengEmotion');
+    var output = '';
+    if(input=='/:hug'){
+        output = '抱抱';
+    }
+    return output;
+}
 
 function save(values){
     //var values = [cid, msgDetail.msg, msgDetail.fromWho, msgDetail.toWho];
