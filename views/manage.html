@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link href="/stylesheets/pagination.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/manage.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/jquery-latest.js"></script>
+    <script src="/javascripts/pagination.js"></script>
+    <style type="text/css">
+    </style>    
+<head>
+    <meta charset="utf-8">
+    <title>审核</title>
+    <!-- Bootstrap -->
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <div>
+                <h1>Chat Room</h1>
+                </div>
+            </td>
+            <td>
+                <ul class="nav nav-pills">
+                    <li><a href="/">主页</a></li>
+                    <li class="active"><a href="/manage">审核</a></li>
+                    <li><a href="/split">分词管理</a></li>
+                    <li><a href="/chat">聊天</a></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    
+    
+    
+    <div id="wrapper">
+        <div>
+            <ul class="nav nav-pills">
+                <li id="alltab"><a href="javascript:void(0)" onclick="showAll()">all</a></li>
+                <li class="active" id="audittab"><a href="javascript:void(0)" onclick="showAudit()">to be audit</a></li>
+            </ul>
+        </div>
+        <section>
+            <div id="data-container" class="data-container"></div>
+            <div id="pagination"></div>
+        </section>
+    </div>
+    
+
+    <script>
+        
+        function display(name){
+            var container = $('#pagination');
+            var options;
+            if(name=='all'){
+                options = {
+                    dataSource: 'http://localhost:3000/manage/msglistall',
+                    locator: 'msgList',
+                    totalNumber: <%=msgCount%>,
+                    pageSize: 20,
+                    showGoInput: true,
+                    showGoButton: true,     
+                    ajax: {
+                        beforeSend: function(){
+                            $('#data-container').html('Loading data ...');
+                        }
+                    },
+                    callback: function(response, pagination){
+                        window.console && console.log(response, pagination);
+                        var html = createHtmlRow(response);
+                        $('#data-container').html(html);
+                    }
+                };
+            }else if(name=='audit'){
+                options = {
+                    dataSource: 'http://localhost:3000/manage/msglist',
+                    locator: 'msgList',
+                    totalNumber: <%=msgCount2%>,
+                    pageSize: 20,
+                    showGoInput: true,
+                    showGoButton: true,     
+                    ajax: {
+                        beforeSend: function(){
+                            $('#data-container').html('Loading data ...');
+                        }
+                    },
+                    callback: function(response, pagination){
+                        window.console && console.log(response, pagination);
+                        var html = createHtmlRow(response);
+                        $('#data-container').html(html);
+                    }
+                };
+            }
+
+            //$.pagination(container, options);
+            container.addHook('beforeInit', function(){
+                window.console && console.log('beforeInit...');
+            });
+            container.pagination(options);
+            container.addHook('beforePageOnClick', function(){
+                window.console && console.log('beforePageOnClick...');
+                //return false
+            });
+            return container;
+        }
+        
+        
+        function createHtmlRow(data) {
+            if(data.err!=null){
+                return data.err;
+            }else{
+                var html = '<ul>';
+                $.each(data, function(index, item){
+                    var cid = item.split(':')[0];
+                    var mid = item.split(':')[1];
+                    var msg = item.split(':')[2];
+                    var isGood = item.split(':')[3];
+                    if(msg.length > 50)msg=msg.substring(0,50)+"......";
+                    html += '<li id="a_'+cid+'_'+mid+'" ';
+                    if(isGood == "Y"){
+                        html += 'style="background-color:#99FF99"';
+                    }else if(isGood == "N"){
+                        html += 'style="background-color:#FF8888 "';
+                    }
+                    html += '>'+ cid + '.' + mid + ': ' + msg ;
+                    html += '<div style="float:right"><input type="radio" name="isGood' + mid + '"'; 
+                    if(isGood == 'Y')html += ' checked="checked" '; 
+                    html += ' onClick="auditY(' + cid + ',' + mid + ')" />Good'; 
+                    html += '<input type="radio" name="isGood' + mid + '"';
+                    if(isGood == 'N')html += ' checked="checked" '; 
+                    html += ' onClick="auditN(' + cid + ',' + mid + ')" />Bad </div>' +'</li>'; 
+                });
+                html += '</ul>';
+                return html;
+            }
+        }
+        
+        display('audit');
+        
+        
+        function auditY(cid,mid){
+            audit('Y',cid,mid);
+        }
+        
+        function auditN(cid,mid){
+            audit('N',cid,mid);
+        }
+        
+        function audit(isGood,cid,mid){
+            //alert('call audit:' + isGood);
+            $.post("/manage/audit",
+                {'cid':cid,'mid':mid,'isGood':isGood},
+                function(data) {
+                    if(data.response == 'error'){
+                        alert('update db failed.');
+                    }else if(data.response == 'success'){
+                        if(isGood == "Y"){
+                            document.getElementById('a_'+cid+'_'+mid).style.cssText="background-color:#99FF99";
+                        } else if(isGood == "N"){
+                            document.getElementById('a_'+cid+'_'+mid).style.cssText="background-color:#FF8888";
+                        }
+                        
+                    }
+                },
+                "json");
+        }
+
+        function showAll(){
+            $('#data-container').html('');
+            $('#pagination').html('');
+            document.getElementById('audittab').className = '';
+            document.getElementById('alltab').className = 'active';
+            display('all');
+        }
+
+        function showAudit(){
+            $('#data-container').html('');
+            $('#pagination').html('');
+            document.getElementById('alltab').className = '';
+            document.getElementById('audittab').className = 'active';
+            display('audit');
+        }
+    </script>
+    
+</body>
+
+</html>

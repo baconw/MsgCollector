@@ -1,5 +1,5 @@
 {
-  "name": "MsgCollector",
+  "name": "msgcollector",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,6 +12,21 @@
     "express": "~4.13.1",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
+    "nan": "^2.3.3",
     "serve-favicon": "~2.3.0"
-  }
+  },
+  "gyp-file": true,
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baconw/MsgCollector.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baconw/MsgCollector/issues"
+  },
+  "homepage": "https://github.com/baconw/MsgCollector#readme",
+  "description": ""
 }

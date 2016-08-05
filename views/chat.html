@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/stylesheets/pagination.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/chat.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="/javascripts/pagination.js"></script>
+    <script src="/javascripts/jquery-latest.js"></script>
+    <meta charset="utf-8">
+    <title>小鸡鸡聊天机器人</title>
+    <!-- Bootstrap -->
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <div>
+                <h1>Chat Room</h1>
+                </div>
+            </td>
+            <td>
+                <ul class="nav nav-pills">
+                    <li><a href="/">主页</a></li>
+                    <li><a href="/manage">审核</a></li>
+                    <li><a href="/split">分词管理</a></li>
+                    <li class="active"><a href="/chat">聊天</a></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <div class="wrapper">
+        <div class="banner">
+            <h1><%=title%></h1>
+            <span id="status"></span>
+        </div>
+        <div id="historyMsg">
+        </div>
+        <div class="controls" >
+            <div class="items">
+                <input id="colorStyle" type="color" placeHolder='#000' title="font color" />
+                <input id="emoji" type="button" value="emoji" title="emoji" />
+                <input id="clearBtn" type="button" value="clear" title="clear screen" />
+            </div>
+            <textarea id="messageInput" placeHolder="enter to send"></textarea>
+            <input id="sendBtn" type="button" value="SEND">
+            <div id="emojiWrapper">
+            </div>
+        </div>
+    </div> 
+    <script>
+      window.onload = function() {
+      //实例并初始化我们的hichat程序
+      var hichat = new HiChat();
+          hichat.init();
+      };
+
+      //定义我们的hichat类
+      var HiChat = function() {
+          this.socket = null;
+      };
+
+      //向原型添加业务方法
+      HiChat.prototype = {
+          init: function() {//此方法初始化程序
+              var that = this;
+
+              document.getElementById('sendBtn').addEventListener('click', function() {
+                  var messageInput = document.getElementById('messageInput'),
+                      msg = messageInput.value;
+                  messageInput.value = '';
+                  messageInput.focus();
+                  if (msg.trim().length != 0) {
+                      //把消息发送到服务器
+                      /*
+                      $.getJSON("/chat/sendMsg?msg="+msg,
+                          function(data) {
+                              that._displayNewMsg('system', data.response);
+                          });
+                      that._displayNewMsg('me', msg); //把自己的消息显示到自己的窗口中
+                      */
+                      
+                      $.post("/chat/sendMsg",
+                      {'msg':msg},
+                      function(data) {
+                          that._displayNewMsg('system', data.response);
+                      },
+                      "json");
+                      that._displayNewMsg('me', msg); //把自己的消息显示到自己的窗口中
+                  };
+              }, false);
+          },
+          _displayNewMsg: function(user, msg, color) {
+              var container = document.getElementById('historyMsg'),
+                  msgToDisplay = document.createElement('p'),
+                  date = new Date().toTimeString().substr(0, 8);
+              msgToDisplay.style.color = color || '#000';
+              msgToDisplay.innerHTML = user + '<span class="timespan">(' + date + '): </span>' + msg;
+              container.appendChild(msgToDisplay);
+              container.scrollTop = container.scrollHeight;
+          }
+      };
+     
+      </script>
+      
+</body>
+</html>

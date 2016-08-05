@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link href="/stylesheets/pagination.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/manage.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="/javascripts/jquery-latest.js"></script>
+    <script src="/javascripts/pagination.js"></script>
+    <style type="text/css">
+    </style>    
+<head>
+    <meta charset="utf-8">
+    <title>分词管理</title>
+    <!-- Bootstrap -->
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <div>
+                <h1>Chat Room</h1>
+                </div>
+            </td>
+            <td>
+                <ul class="nav nav-pills">
+                    <li><a href="/">主页</a></li>
+                    <li><a href="/manage">审核</a></li>
+                    <li class="active"><a href="/split">分词管理</a></li>
+                    <li><a href="/chat">聊天</a></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    
+    
+    
+    
+    
+    
+    <div id="wrapper">
+        <section>
+            <div id="data-container" class="data-container"></div>
+            <div id="pagination-demo1"></div>
+        </section>
+    </div>
+    
+
+    <script>
+        $(function(){
+            function createDemo(name){
+                var container = $('#pagination-' + name);
+                var options = {
+                    dataSource: 'http://localhost:3000/split/msglist',
+                    locator: 'msgList',
+                    totalNumber: <%=msgCount%>,
+                    pageSize: 10,
+                    ajax: {
+                        beforeSend: function(){
+                            $('#data-container').html('Loading data ...');
+                        }
+                    },
+                    callback: function(response, pagination){
+                        window.console && console.log(response, pagination);
+                        var html = simpleTemplating(response);
+                        $('#data-container').html(html);
+                    }
+                };
+                //$.pagination(container, options);
+                container.addHook('beforeInit', function(){
+                    window.console && console.log('beforeInit...');
+                });
+                container.pagination(options);
+                container.addHook('beforePageOnClick', function(){
+                    window.console && console.log('beforePageOnClick...');
+                    //return false
+                });
+                return container;
+            }
+            
+            function simpleTemplating(data) {
+                if(data.err!=null){
+                    return data.err;
+                }else{
+                    var html = '<ul>';
+                    $.each(data, function(index, item){
+                        var cid = item.split(':')[0];
+                        var answermid = item.split(':')[1];
+                        var isAudit = item.split(':')[2];
+                        var askmsg = item.split(':')[3];
+                        var answermsg = item.split(':')[4];
+                        var keywords = item.split(':')[5];
+                        html += '<li id="a_'+cid+'_'+answermid+'" ';
+                        if(isAudit=="Y"){
+                            html += 'style="background-color:#99FF99"';
+                        }
+                        html += '>'+ askmsg + '  ' + '</li>';
+                        html += '<li id="b_'+cid+'_'+answermid+'" ';
+                        if(isAudit=="Y"){
+                            html += 'style="background-color:#99FF99"';
+                        }
+                        html += '><input type="text" id="keywords_' + cid + '_' + answermid + '" value="'+keywords+'"></textarea>';
+                        html += '<input id="sendBtn" type="button" value="SEND" onClick="audit(' + cid + ',' + answermid + ')"></li>';
+                    });
+                    html += '</ul>';
+                    return html;
+                }
+            }
+            createDemo('demo1');
+        });
+        
+        function audit(cid,mid){
+            var keywords = ($('#keywords_'+cid+'_'+mid).attr("value"));
+            //alert(keywords);
+            var keywords2 = document.getElementById('keywords_'+cid+'_'+mid).value;
+            keywords2 = keywords2.replace(/，/ig,','); 
+            
+            var change = "N";
+            if(keywords != keywords2){
+                change = "Y";
+            }
+            
+            $.post("/split/audit",
+                {'cid':cid,'mid':mid,'isChanged':change,'keywords':keywords2},
+                function(data) {
+                    if(data.response == 'error'){
+                        alert('update db failed.');
+                    }else if(data.response == 'success'){
+                        document.getElementById('a_'+cid+'_'+mid).style.cssText="background-color:#99FF99";
+                        document.getElementById('b_'+cid+'_'+mid).style.cssText="background-color:#99FF99";
+                    }
+                },
+                "json");
+                
+        }
+    </script>
+    
+</body>
+
+</html>
