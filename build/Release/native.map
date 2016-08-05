@@ -1,6 +1,6 @@
- hello
+ native
 
- Timestamp is 57a3fe53 (Fri Aug  5 10:47:47 2016)
+ Timestamp is 57a3fed2 (Fri Aug  5 10:49:54 2016)
 
  Preferred load address is 0000000180000000
 
@@ -71,8 +71,8 @@
  0001:00000000       ?TraceLoggingRegister@__vcrt_trace_logging_provider@@YAJPEBU_TlgProvider_t@1@PEBU_GUID@@P6AX1KE_K2PEAU_EVENT_FILTER_DESCRIPTOR@@PEAX@Z4@Z 0000000180001000 f i libvcruntime:telemetry.obj
  0001:0000007c       ?_TlgEnableCallback@__vcrt_trace_logging_provider@@YAXPEBU_GUID@@KE_K1PEAU_EVENT_FILTER_DESCRIPTOR@@PEAX@Z 000000018000107c f i libvcruntime:telemetry.obj
  0001:00000140       ?_TlgWrite@__vcrt_trace_logging_provider@@YAJPEBU_TlgProvider_t@1@PEFBXPEBU_GUID@@2IPEAU_EVENT_DATA_DESCRIPTOR@@@Z 0000000180001140 f i libvcruntime:telemetry.obj
- 0001:000001e0       ?SleepFunc@@YAXAEBV?$FunctionCallbackInfo@VValue@v8@@@v8@@@Z 00000001800011e0 f   hello.obj
- 0001:00000240       ?Init@@YAXV?$Local@VObject@v8@@@v8@@@Z 0000000180001240 f   hello.obj
+ 0001:000001e0       ?SleepFunc@@YAXAEBV?$FunctionCallbackInfo@VValue@v8@@@v8@@@Z 00000001800011e0 f   native.obj
+ 0001:00000240       ?Init@@YAXV?$Local@VObject@v8@@@v8@@@Z 0000000180001240 f   native.obj
  0001:0000031c       __imp_load_?GetCurrent@Isolate@v8@@SAPEAV12@XZ 000000018000131c f   node:node.exe
  0001:00000328       __tailMerge_node_exe       0000000180001328 f i node:node.exe
  0001:000003a1       __imp_load_??1HandleScope@v8@@QEAA@XZ 00000001800013a1 f   node:node.exe
@@ -348,8 +348,8 @@
  0001:0000a6e0       _ValidateImageBase         000000018000b6e0 f   LIBCMT:pesect.obj
  0001:0000a720       __chkstk                   000000018000b720 f   LIBCMT:_chkstk_.obj
  0001:0000a720       _alloca_probe              000000018000b720 f   LIBCMT:_chkstk_.obj
- 0001:0000a790       memmove                    000000018000b790 f   libvcruntime:memcpy.obj
  0001:0000a790       memcpy                     000000018000b790 f   libvcruntime:memcpy.obj
+ 0001:0000a790       memmove                    000000018000b790 f   libvcruntime:memcpy.obj
  0001:0000abe0       memcmp                     000000018000bbe0 f   libvcruntime:memcmp.obj
  0001:0000acc0       _guard_dispatch_icall_nop  000000018000bcc0 f   LIBCMT:_guard_dispatch_.obj
  0002:00000000       __imp_SystemFunction036    000000018000c000     advapi32:ADVAPI32.dll
@@ -431,7 +431,7 @@
  0002:00000260       __guard_check_icall_fptr   000000018000c260     LIBCMT:guard_support.obj
  0002:00000268       __guard_dispatch_icall_fptr 000000018000c268     LIBCMT:guard_support.obj
  0002:00000270       __xc_a                     000000018000c270     LIBCMT:initializers.obj
- 0002:00000278       _register_hello_           000000018000c278     hello.obj
+ 0002:00000278       _register_native_          000000018000c278     native.obj
  0002:00000280       __xc_z                     000000018000c280     LIBCMT:initializers.obj
  0002:00000288       __xi_a                     000000018000c288     LIBCMT:initializers.obj
  0002:00000290       __acrt_multibyte_initializer 000000018000c290     libucrt:multibyte_initializer.obj
@@ -1074,9 +1074,9 @@
  0002:00007240       ??_C@_0BI@OMNLIJDB@AcquireSRWLockExclusive?$AA@ 0000000180013240     DelayImp:delayhlp.obj
  0002:00007258       ??_C@_0BI@HMIEPCNJ@ReleaseSRWLockExclusive?$AA@ 0000000180013258     DelayImp:delayhlp.obj
  0002:00007270       _load_config_used          0000000180013270     LIBCMT:loadcfg.obj
- 0002:00007304       ??_C@_05PCJCMMHD@sleep?$AA@ 0000000180013304     hello.obj
- 0002:00007310       ??_C@_0M@BBLGOCDO@?4?4?2hello?4cc?$AA@ 0000000180013310     hello.obj
- 0002:0000731c       ??_C@_05CJBACGMB@hello?$AA@ 000000018001331c     hello.obj
+ 0002:00007304       ??_C@_05PCJCMMHD@sleep?$AA@ 0000000180013304     native.obj
+ 0002:00007310       ??_C@_0N@EALAANLE@?4?4?2native?4cc?$AA@ 0000000180013310     native.obj
+ 0002:00007320       ??_C@_06HIDILOEA@native?$AA@ 0000000180013320     native.obj
  0002:00007328       ??_C@_08HCOMDCCD@iojs?4exe?$AA@ 0000000180013328     win_delay_load_hook.obj
  0002:00007338       ??_C@_08JDDNMFDB@node?4exe?$AA@ 0000000180013338     win_delay_load_hook.obj
  0002:000073a8       ?_TraceLoggingMetadata@?1??_TlgWrite@__vcrt_trace_logging_provider@@YAJPEBU_TlgProvider_t@2@PEFBXPEBU_GUID@@2IPEAU_EVENT_DATA_DESCRIPTOR@@@Z@4U_TraceLoggingMetadata_t@2@B 00000001800133a8     libvcruntime:telemetry.obj
@@ -1200,7 +1200,7 @@
  0000:fffe5000       .debug$S                   0000000180000000     node:node.exe
  0000:fffe5000       .debug$S                   0000000180000000     node:node.exe
  0000:fffe5000       .debug$S                   0000000180000000     advapi32:ADVAPI32.dll
- 0000:fffe5000       .debug$S                   0000000180000000     hello.exp
+ 0000:fffe5000       .debug$S                   0000000180000000     native.exp
  0000:fffe5000       .debug$S                   0000000180000000     kernel32:KERNEL32.dll
  0000:fffe5000       .debug$S                   0000000180000000     kernel32:KERNEL32.dll
  0000:fffe5000       .debug$S                   0000000180000000     kernel32:KERNEL32.dll
@@ -1291,7 +1291,7 @@
  0000:fffe5000       .debug$S                   0000000180000000     kernel32:KERNEL32.dll
  0000:fffe5000       .debug$S                   0000000180000000     kernel32:KERNEL32.dll
  0000:fffe5000       .debug$S                   0000000180000000     kernel32:KERNEL32.dll
- 0001:000002c0       _register_hello            00000001800012c0 f   hello.obj
+ 0001:000002c0       _register_native           00000001800012c0 f   native.obj
  0001:000002d0       load_exe_hook              00000001800012d0 f   win_delay_load_hook.obj
  0001:00000410       $$000000                   0000000180001410     LIBCMT:_amdsecgs_.obj
  0001:00000444       ?dllmain_crt_dispatch@@YAHQEAUHINSTANCE__@@KQEAX@Z 0000000180001444 f   LIBCMT:dll_dllmain.obj
@@ -1473,8 +1473,8 @@
  0002:00007878       $unwind$?_TlgWrite@__vcrt_trace_logging_provider@@YAJPEBU_TlgProvider_t@1@PEFBXPEBU_GUID@@2IPEAU_EVENT_DATA_DESCRIPTOR@@@Z 0000000180013878     libvcruntime:telemetry.obj
  0002:00007878       $unwind$?getSystemCP@@YAHH@Z 0000000180013878     libucrt:mbctype.obj
  0002:00007878       $unwind$_isleadbyte_l      0000000180013878     libucrt:_wctype.obj
- 0002:00007878       $unwind$?SleepFunc@@YAXAEBV?$FunctionCallbackInfo@VValue@v8@@@v8@@@Z 0000000180013878     hello.obj
- 0002:00007880       $unwind$?Init@@YAXV?$Local@VObject@v8@@@v8@@@Z 0000000180013880     hello.obj
+ 0002:00007878       $unwind$?SleepFunc@@YAXAEBV?$FunctionCallbackInfo@VValue@v8@@@v8@@@Z 0000000180013878     native.obj
+ 0002:00007880       $unwind$?Init@@YAXV?$Local@VObject@v8@@@v8@@@Z 0000000180013880     native.obj
  0002:0000788c       $unwind$_fflush_nolock     000000018001388c     libucrt:fflush.obj
  0002:0000788c       $unwind$__acrt_freeptd     000000018001388c     libucrt:per_thread_data.obj
  0002:0000788c       $unwind$load_exe_hook      000000018001388c     win_delay_load_hook.obj
@@ -1767,12 +1767,12 @@
  0002:00008308       $xdatasym                  0000000180014308     LIBCMT:_chkstk_.obj
  0002:00008310       $xdatasym                  0000000180014310     libvcruntime:memcpy.obj
  0002:00008318       $xdatasym                  0000000180014318     libvcruntime:memcmp.obj
- 0002:00008640       .edata                     0000000180014640     hello.exp
- 0002:00008668       rgpv                       0000000180014668     hello.exp
- 0002:0000866c       rgszName                   000000018001466c     hello.exp
- 0002:00008670       rgwOrd                     0000000180014670     hello.exp
- 0002:00008672       szName                     0000000180014672     hello.exp
- 0002:0000867d       $N00001                    000000018001467d     hello.exp
+ 0002:00008640       .edata                     0000000180014640     native.exp
+ 0002:00008668       rgpv                       0000000180014668     native.exp
+ 0002:0000866c       rgszName                   000000018001466c     native.exp
+ 0002:00008670       rgwOrd                     0000000180014670     native.exp
+ 0002:00008672       szName                     0000000180014672     native.exp
+ 0002:0000867e       $N00001                    000000018001467e     native.exp
  0002:0000894c       .idata$6                   000000018001494c     kernel32:KERNEL32.dll
  0002:00008e58       .idata$6                   0000000180014e58     advapi32:ADVAPI32.dll
  0003:00000030       ?_Tlg_Microsoft_CRTProviderProv@@3U_TlgProvider_t@__vcrt_trace_logging_provider@@A 0000000180015030     libvcruntime:telemetry.obj
@@ -1783,7 +1783,7 @@
  0003:00000440       __rgctypeflag              0000000180015440     libucrt:mbctype.obj
  0003:00000450       __rgcode_page_info         0000000180015450     libucrt:mbctype.obj
  0003:00000910       ?dazSupported@?1??_ctrlfp@@9@9 0000000180015910     libucrt:fpctrl.obj
- 0003:00000930       _module                    0000000180015930     hello.obj
+ 0003:00000930       _module                    0000000180015930     native.obj
  0003:000009d8       ?__proc_attached@@3HA      00000001800159d8     LIBCMT:dll_dllmain.obj
  0003:000009e0       GS_ExceptionRecord         00000001800159e0     LIBCMT:gs_report.obj
  0003:00000a80       GS_ContextRecord           0000000180015a80     LIBCMT:gs_report.obj
@@ -1819,8 +1819,8 @@
  0004:00000000       $pdata$?TraceLoggingRegister@__vcrt_trace_logging_provider@@YAJPEBU_TlgProvider_t@1@PEBU_GUID@@P6AX1KE_K2PEAU_EVENT_FILTER_DESCRIPTOR@@PEAX@Z4@Z 0000000180017000     libvcruntime:telemetry.obj
  0004:0000000c       $pdata$?_TlgEnableCallback@__vcrt_trace_logging_provider@@YAXPEBU_GUID@@KE_K1PEAU_EVENT_FILTER_DESCRIPTOR@@PEAX@Z 000000018001700c     libvcruntime:telemetry.obj
  0004:00000018       $pdata$?_TlgWrite@__vcrt_trace_logging_provider@@YAJPEBU_TlgProvider_t@1@PEFBXPEBU_GUID@@2IPEAU_EVENT_DATA_DESCRIPTOR@@@Z 0000000180017018     libvcruntime:telemetry.obj
- 0004:00000024       $pdata$?SleepFunc@@YAXAEBV?$FunctionCallbackInfo@VValue@v8@@@v8@@@Z 0000000180017024     hello.obj
- 0004:00000030       $pdata$?Init@@YAXV?$Local@VObject@v8@@@v8@@@Z 0000000180017030     hello.obj
+ 0004:00000024       $pdata$?SleepFunc@@YAXAEBV?$FunctionCallbackInfo@VValue@v8@@@v8@@@Z 0000000180017024     native.obj
+ 0004:00000030       $pdata$?Init@@YAXV?$Local@VObject@v8@@@v8@@@Z 0000000180017030     native.obj
  0004:0000003c       $pdata$load_exe_hook       000000018001703c     win_delay_load_hook.obj
  0004:00000060       $pdata$?dllmain_crt_dispatch@@YAHQEAUHINSTANCE__@@KQEAX@Z 0000000180017060     LIBCMT:dll_dllmain.obj
  0004:0000006c       $pdata$?dllmain_crt_process_attach@@YAHQEAUHINSTANCE__@@QEAX@Z 000000018001706c     LIBCMT:dll_dllmain.obj
@@ -2124,4 +2124,4 @@
 
   ordinal    name
 
-        1    _register_hello_
+        1    _register_native_

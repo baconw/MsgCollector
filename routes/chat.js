@@ -4,7 +4,7 @@ var http = require('http');
 var db = require('../database/setting');
 var segment = require('../segment/setting');
 var router = express.Router();
-var sleep = require('../build/Release/hello.node').sleep;
+var sleep = require('../build/Release/native.node').sleep;
 var core = require('../core/manage.js');
 
 

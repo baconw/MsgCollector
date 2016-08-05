@@ -17,4 +17,4 @@ void Init(Handle<Object> exports) {
       FunctionTemplate::New(isolate, SleepFunc)->GetFunction());
 }
  
-NODE_MODULE(hello, Init);
+NODE_MODULE(native, Init);
