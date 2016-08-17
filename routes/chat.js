@@ -4,7 +4,7 @@ var http = require('http');
 var db = require('../database/setting');
 var segment = require('../segment/setting');
 var router = express.Router();
-var sleep = require('../build/Release/native.node').sleep;
+//var sleep = require('../build/Release/native.node').sleep;
 var core = require('../core/manage.js');
 
 
@@ -33,17 +33,6 @@ router.get('/', function (req, res, next) {
             console.log('old cid:'+req.session.cid);
             sendResponse(req,res);
         }
-
-        /*
-        switch(req.query.deviceType){
-            case "1":
-                console.log("deviceType 1");
-                res.send({ 'status': 'Succeed' });
-                break;
-            default:
-                console.log("deviceType other");
-                res.render('chat', { title: titlev });
-        }*/
 
     } else {
         //console.log('user 4:'+req.session.user);
@@ -77,12 +66,36 @@ var sendResponse = function(req,res){
 //自动聊天
 router.post('/sendMsg', function (req, res, next) {
     var msg = req.body.msg;
-    var user = req.session.user;
+    //var user = req.session.user;
+    var user = req.body.user;
     console.log('call chat/sendmsg user[' + user + ']: ' + msg);
     
     console.log('cid:' + req.session.cid + ' mid:' + req.session.mid);
-    if(!user || !req.session.cid){
+    if(!user){
         res.send({ 'response': '请先登录' , 'status':'Failed'});
+    } else if(!req.session.cid){
+        core.startMengmengActive();
+        core.requestnewcid(user,function(cid){
+            console.log('new cid:'+cid)
+            req.session.cid = cid;
+            req.session.mid = 0;
+            
+            var msgDetail = {
+                            cid:req.session.cid,
+                            mid:req.session.mid,
+                            msg:msg,
+                            fromWho:user,
+                            toWho:"system",
+                            res:res,
+                            req:req
+                        };
+            core.saveMsgToDb(msgDetail);
+            
+            //sleep(1000);
+            
+            core.sendMsgToSystem(msgDetail, req, res);
+            
+        });
     }else{
         
         req.session.mid++;
@@ -97,28 +110,48 @@ router.post('/sendMsg', function (req, res, next) {
                     };
         core.saveMsgToDb(msgDetail);
         
-        sleep(1000);
+        //sleep(1000);
         
         core.sendMsgToSystem(msgDetail, req, res);
 
     }
-    
-    //choose a better answers
-    
-    //send back
-    
-    //res.send({ 'response': '你好，我是小鸡机器人' });
 });
 
 router.post('/sendCmd', function (req, res, next) {
     var cmd = req.body.cmd;
-    var user = req.session.user;
+    //var user = req.session.user;
+    var user = req.body.user;
     console.log('call chat/sendCmd user[' + user + ']: ' + cmd);
     
     console.log('cid:' + req.session.cid + ' mid:' + req.session.mid);
-    if(!user || !req.session.cid){
+    if(!user){
         res.send({ 'response': '请先登录' , 'status':'Failed'});
-    }else{
+    } else if(!req.session.cid){
+        core.startMengmengActive();
+        core.requestnewcid(user,function(cid){
+            console.log('new cid:'+cid)
+            req.session.cid = cid;
+            req.session.mid = 0;
+            
+            var msgDetail = {
+                            cid:req.session.cid,
+                            mid:req.session.mid,
+                            msg:cmd,
+                            fromWho:user,
+                            toWho:"system",
+                            res:res,
+                            req:req
+                        };
+            
+            //core.saveMsgToDb(msgDetail);
+            
+            //sleep(100);
+            
+            core.sendCmdToSystem(msgDetail, req, res);
+            
+        });
+    }
+    else{
         
         //req.session.mid++;
         
@@ -134,17 +167,11 @@ router.post('/sendCmd', function (req, res, next) {
         
         //core.saveMsgToDb(msgDetail);
         
-        sleep(100);
+        //sleep(100);
         
         core.sendCmdToSystem(msgDetail, req, res);
 
     }
-    
-    //choose a better answers
-    
-    //send back
-    
-    //res.send({ 'response': '你好，我是小鸡机器人' });
 });
 
 

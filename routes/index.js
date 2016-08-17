@@ -4,7 +4,7 @@ var http = require('http');
 var db = require('../database/setting');
 var segment = require('../segment/setting');
 var router = express.Router();
-var sleep = require('../build/Release/native.node').sleep;
+//var sleep = require('../build/Release/native.node').sleep;
 var MAX_KEY_WORD = 3;
 var core = require('../core/manage.js');
 
@@ -18,7 +18,7 @@ function displayMengMengResponse(msgDetail){
     msgDetail.fromWho = "mengmeng";
     msgDetail.toWho = "tuling";
     core.saveMsgToDb(msgDetail);
-    sleep(2000);
+    //sleep(2000);
     if(msgDetail.mid<100){
         core.sendMsgToTuling(msgDetail, displayTulingResponse);
     }
@@ -30,7 +30,7 @@ function displayTulingResponse(msgDetail){
     msgDetail.fromWho = "tuling";
     msgDetail.toWho = "mengmeng";
     core.saveMsgToDb(msgDetail);
-    sleep(2000);
+    //sleep(2000);
     if(msgDetail.mid<100){
         core.sendMsgToMengMeng(msgDetail, displayMengMengResponse);
     }

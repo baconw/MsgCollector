@@ -519,6 +519,7 @@ var sendCmdToSystem = function (msgDetail, req, res) {
 }
 
 var requestnewcid = function(uid,callback){
+    console.log("requestnewcid is called");
     var cid;
     db.query('SELECT max(cid) as cid FROM cattiebot.conversation;', function (err, rows, fields) {
         if(err){
@@ -533,10 +534,10 @@ var requestnewcid = function(uid,callback){
             }
             
             var values = [cid, uid];
-            //console.log('new cid:'+cid);
+            console.log('generating new cid:'+cid);
             db.query('insert into cattiebot.conversation set cid = ?, uid = ?', values, function (err, rows, fields) {
                 if(err){
-                    console.log('err');
+                    console.log('err generating new cid:' + err);
                     
                 }else{
                     callback(cid);
