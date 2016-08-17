@@ -493,7 +493,7 @@ var sendCmdToSystem = function (msgDetail, req, res) {
     
     //search for answers
     var values = [msgDetail.msg];
-    var querystr = 'select * from cattiebot.preparedAsk where type = ?';
+    var querystr = 'select * from cattiebot.preparedask where type = ?';
     db.query(querystr,values,function(err,rows,fields){
         if(err){
             console.log('error querystr:' + querystr);
