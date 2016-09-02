@@ -66,8 +66,11 @@ var sendResponse = function(req,res){
 //自动聊天
 router.post('/sendMsg', function (req, res, next) {
     var msg = req.body.msg;
-    //var user = req.session.user;
-    var user = req.body.user;
+    var user = req.session.user;
+    if(!user){
+        user = req.body.user;
+    }
+    
     console.log('call chat/sendmsg user[' + user + ']: ' + msg);
     
     console.log('cid:' + req.session.cid + ' mid:' + req.session.mid);
@@ -119,8 +122,10 @@ router.post('/sendMsg', function (req, res, next) {
 
 router.post('/sendCmd', function (req, res, next) {
     var cmd = req.body.cmd;
-    //var user = req.session.user;
-    var user = req.body.user;
+    var user = req.session.user;
+    if(!user){
+        user = req.body.user;
+    }
     console.log('call chat/sendCmd user[' + user + ']: ' + cmd);
     
     console.log('cid:' + req.session.cid + ' mid:' + req.session.mid);
