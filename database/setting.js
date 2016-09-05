@@ -1,5 +1,6 @@
 var mysql      = require('mysql');
 
+/*
 var db_config = {
   host     : 'localhost',
   user     : 'root',
@@ -29,5 +30,15 @@ function connect () {
 }
 
 connect();
+*/
+
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'Password05',
+  database : 'cattiebot'
+});
+
+connection.connect();
 
 module.exports = connection;
