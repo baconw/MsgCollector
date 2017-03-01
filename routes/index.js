@@ -13,6 +13,7 @@ function markDuplicate(baseres) {
 }
 
 function displayMengMengResponse(msgDetail){
+    msgDetail.msg = msgDetail.msg.replace(/萌萌/g,"小呆").replace(/雷锋/g,"主人");    
     console.log('mengmeng said:' + msgDetail.msg);
     msgDetail.mid++;
     msgDetail.fromWho = "mengmeng";
@@ -25,6 +26,7 @@ function displayMengMengResponse(msgDetail){
 }
 
 function displayTulingResponse(msgDetail){
+    msgDetail.msg = msgDetail.msg.replace(/图灵机器人/g,"小呆");    
     console.log('tuling said:' + msgDetail.msg);
     msgDetail.mid++;
     msgDetail.fromWho = "tuling";

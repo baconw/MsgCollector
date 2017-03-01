@@ -299,12 +299,9 @@ var startMengmengActive = function() {
 
 function displayMengMengResponse(msgDetail){
     msgDetail.msg = msgDetail.msg.replace(/^\s+/g,"").replace(/\s+$/g,"");
-    var mengmengStr = /萌萌/g;
-    var xiaodaiStr = "小呆";
-    var leifengStr = /雷锋/g;
-    var zhurenStr = "主人";
-    msgDetail.msg = msgDetail.msg.replace(new regexp(mengmengStr),xiaodaiStr).replace(new regexp(leifengStr),zhurenStr);    
-console.log('mengmeng said:' + msgDetail.msg);
+    msgDetail.msg = msgDetail.msg.replace(/萌萌/g,"小呆").replace(/雷锋/g,"主人");    
+msgDetail.msg = msgDetail.msg.replace(new regexp(mengmengStr),xiaodaiStr).replace(new regexp(leifengStr),zhurenStr);    
+console.log('mengmeng said 2:' + msgDetail.msg);
     if(msgDetail.msg == ""){
         var values = [msgDetail.cid, msgDetail.mid];
         db.query('SELECT msg FROM cattiebot.msgcollector where conversationId = ? and msgid = ?',values,function(err,rows){
@@ -325,7 +322,6 @@ console.log('mengmeng said:' + msgDetail.msg);
         
     } else {
 	
-	//msgDetail.msg = msgDetail.msg.replace(/萌萌/g,"小呆").replace(/雷锋/g,"主人");	
 
         msgDetail.req.session.mid++;
         msgDetail.mid = msgDetail.req.session.mid;
