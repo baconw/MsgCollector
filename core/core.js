@@ -299,13 +299,18 @@ var startMengmengActive = function() {
 
 function displayMengMengResponse(msgDetail){
     msgDetail.msg = msgDetail.msg.replace(/^\s+/g,"").replace(/\s+$/g,"");
-    console.log('mengmeng said:' + msgDetail.msg);
+    var mengmengStr = /萌萌/g;
+    var xiaodaiStr = "小呆";
+    var leifengStr = /雷锋/g;
+    var zhurenStr = "主人";
+    msgDetail.msg = msgDetail.msg.replace(new regexp(mengmengStr),xiaodaiStr).replace(new regexp(leifengStr),zhurenStr);    
+console.log('mengmeng said:' + msgDetail.msg);
     if(msgDetail.msg == ""){
         var values = [msgDetail.cid, msgDetail.mid];
         db.query('SELECT msg FROM cattiebot.msgcollector where conversationId = ? and msgid = ?',values,function(err,rows){
             if(err){
                 console.log('error querystr:' + err);
-                msgDetail.res.send({ 'response': '小鸡机器人睡了' , 'status':'Failed'});
+                msgDetail.res.send({ 'response': '脑袋短路。' , 'status':'Failed'});
             }else{
                 if(rows.length == 1){
                     msgDetail.msg = rows[0].msg;
@@ -313,18 +318,21 @@ function displayMengMengResponse(msgDetail){
                     sendMsgToMengMeng(msgDetail,displayMengMengResponse);
                 }else{
                     console.log('can not found previous message');
-                    msgDetail.res.send({ 'response': '小鸡机器人睡了' , 'status':'Failed'});
+                    msgDetail.res.send({ 'response': '脑袋短路。。' , 'status':'Failed'});
                 }
             }
         });
         
     } else {
+	
+	//msgDetail.msg = msgDetail.msg.replace(/萌萌/g,"小呆").replace(/雷锋/g,"主人");	
+
         msgDetail.req.session.mid++;
         msgDetail.mid = msgDetail.req.session.mid;
         msgDetail.fromWho = "mengmeng";
         msgDetail.toWho = msgDetail.req.session.user;
-        saveMsgToDb(msgDetail);
-        
+        saveMsgToDb(msgDetail);       
+ 
         msgDetail.res.send({ 'response': msgDetail.msg , 'status':'Succeed'});
     }
 }
@@ -343,7 +351,7 @@ var sendMsgToSystem = function (msgDetail, req, res) {
     db.query(querystr,values,function(err,rows,fields){
         if(err){
             console.log('error querystr:' + querystr);
-            res.send({ 'response': '小鸡机器人睡了' , 'status':'Failed'});
+            res.send({ 'response': '脑袋短路。。。' , 'status':'Failed'});
         } else {
             if(rows.length>0){
                 querystr = 'SELECT group_concat(distinct keywords) as c,cid,mid,0 as score FROM cattiebot.answerpattern where keywords in (';
@@ -359,7 +367,7 @@ var sendMsgToSystem = function (msgDetail, req, res) {
                 db.query(querystr,keywords,function(err,rows,fields){
                     if(err){
                         console.log('error querystr:' + querystr);
-                        res.send({ 'response': '小鸡机器人睡了' , 'status':'Failed'});
+                        res.send({ 'response': '脑袋短路。。。。' , 'status':'Failed'});
                     }else{
                         if(rows.length == 0 ){
                             console.log('result not found querystr:' + querystr);

@@ -56,7 +56,7 @@
             var options;
             if(name=='all'){
                 options = {
-                    dataSource: 'http://localhost:3000/manage/msglistall',
+                    dataSource: '/manage/msglistall',
                     locator: 'msgList',
                     totalNumber: <%=msgCount%>,
                     pageSize: 20,
@@ -75,7 +75,7 @@
                 };
             }else if(name=='audit'){
                 options = {
-                    dataSource: 'http://localhost:3000/manage/msglist',
+                    dataSource: '/manage/msglist',
                     locator: 'msgList',
                     totalNumber: <%=msgCount2%>,
                     pageSize: 20,
