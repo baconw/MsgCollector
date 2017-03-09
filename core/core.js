@@ -522,7 +522,7 @@ var sendCmdToSystem = function (msgDetail, req, res) {
 
                     res.send({ 'response': rows[0].askmsg , 'status':'Succeed'});
                 }
-            })；
+            });
         }
     });
     /*
