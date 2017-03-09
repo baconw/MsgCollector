@@ -506,7 +506,8 @@ var sendCmdToSystem = function (msgDetail, req, res) {
         } else {
             var itemCount = rows[0].c;
             var r = Math.floor(Math.random()*itemCount);
-            querystr = 'select askmsg from cattiebot.askanswer limit r,1';
+            querystr = 'select askmsg from cattiebot.askanswer limit ?,1';
+            values = [r]
             db.query(querystr,values,function(err,rows,fields){
                 if(err){
                     console.log('error querystr:' + querystr);
