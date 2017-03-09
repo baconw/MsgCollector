@@ -498,6 +498,33 @@ var sendCmdToSystem = function (msgDetail, req, res) {
     
     //search for answers
     var values = [msgDetail.msg];
+    var querystr = 'select count(*) as c from cattiebot.askanswer';
+    db.query(querystr,values,function(err,rows,fields){
+        if(err){
+            console.log('error querystr:' + querystr);
+            res.send({ 'response': '小呆睡了' , 'status':'Failed'});
+        } else {
+            var itemCount = rows[0].c;
+            var r = Math.floor(Math.random()*itemCount);
+            querystr = 'select askmsg from cattiebot.askanswer limit r,1';
+            db.query(querystr,values,function(err,rows,fields){
+                if(err){
+                    console.log('error querystr:' + querystr);
+                    res.send({ 'response': '小呆睡了' , 'status':'Failed'});
+                } else {
+                    req.session.mid++;
+                    msgDetail.mid = req.session.mid;
+                    msgDetail.toWho = req.session.user;
+                    msgDetail.fromWho = "system";
+                    msgDetail.msg = rows[0].askmsg;
+                    saveMsgToDb(msgDetail); 
+
+                    res.send({ 'response': rows[0].askmsg , 'status':'Succeed'});
+                }
+            }；
+        }
+    });
+    /*
     var querystr = 'select * from cattiebot.preparedask where type = ?';
     db.query(querystr,values,function(err,rows,fields){
         if(err){
@@ -521,6 +548,7 @@ var sendCmdToSystem = function (msgDetail, req, res) {
             }
         }
     });
+    */
 }
 
 var requestnewcid = function(uid,callback){
