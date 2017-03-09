@@ -50,7 +50,7 @@
             function createDemo(name){
                 var container = $('#pagination-' + name);
                 var options = {
-                    dataSource: 'http://localhost:3000/split/msglist',
+                    dataSource: '/split/msglist',
                     locator: 'msgList',
                     totalNumber: <%=msgCount%>,
                     pageSize: 10,

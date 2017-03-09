@@ -408,7 +408,7 @@ var sendMsgToSystem = function (msgDetail, req, res) {
                             db.query(querystr,values,function(err,rows,fields){
                                 if(err){
                                     console.log('error querystr:' + querystr);
-                                    res.send({ 'response': '小鸡机器人睡了' , 'status':'Failed'});
+                                    res.send({ 'response': '小呆睡了' , 'status':'Failed'});
                                 }else{
                                     console.log('query askanswer result length:' + rows.length);
                        
@@ -502,7 +502,7 @@ var sendCmdToSystem = function (msgDetail, req, res) {
     db.query(querystr,values,function(err,rows,fields){
         if(err){
             console.log('error querystr:' + querystr);
-            res.send({ 'response': '小鸡机器人睡了' , 'status':'Failed'});
+            res.send({ 'response': '小呆睡了' , 'status':'Failed'});
         } else {
             if(rows.length>0){
                 var r = Math.floor(Math.random()*rows.length);
