@@ -298,9 +298,10 @@ var startMengmengActive = function() {
 };
 
 function displayMengMengResponse(msgDetail){
-    msgDetail.msg = msgDetail.msg.replace(/^\s+/g,"").replace(/\s+$/g,"");
+console.log('mengmeng said 1:' + msgDetail.msg);    
+msgDetail.msg = msgDetail.msg.replace(/^\s+/g,"").replace(/\s+$/g,"");
     msgDetail.msg = msgDetail.msg.replace(/萌萌/g,"小呆").replace(/雷锋/g,"主人");    
-msgDetail.msg = msgDetail.msg.replace(new regexp(mengmengStr),xiaodaiStr).replace(new regexp(leifengStr),zhurenStr);    
+//msgDetail.msg = msgDetail.msg.replace(new regexp(mengmengStr),xiaodaiStr).replace(new regexp(leifengStr),zhurenStr);    
 console.log('mengmeng said 2:' + msgDetail.msg);
     if(msgDetail.msg == ""){
         var values = [msgDetail.cid, msgDetail.mid];
